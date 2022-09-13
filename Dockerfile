@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
 
 # Install PHP extensions
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install mysqli pdo_mysql pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd redis
+    && pecl install -o -f redis \
+    && docker-php-ext-enable redis \
+    && docker-php-ext-install mysqli pdo_mysql pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
